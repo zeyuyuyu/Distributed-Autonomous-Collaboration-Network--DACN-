@@ -3,99 +3,126 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SwarmRacer - Compete & Earn!</title>
+    <title>DACN - Collaborate & Earn</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .glow { animation: glow 2s infinite alternate; }
-        @keyframes glow { from {box-shadow: 0 0 10px #ff6b6b;} to {box-shadow: 0 0 20px #ff6b6b;} }
-        .float { animation: float 3s infinite ease-in-out; }
-        @keyframes float { 0% {transform: translateY(0px);} 50% {transform: translateY(-20px);} 100% {transform: translateY(0px);} }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
-<body class="bg-gray-900 text-white">
-    <div class="container mx-auto px-4 py-8">
-        <div class="text-center mb-12">
-            <h1 class="text-5xl font-bold mb-4 glow">SwarmRacer</h1>
-            <p class="text-xl text-gray-400">Race your swarm. Climb the ranks. Earn rewards.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
-            <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
-                <h2 class="text-2xl font-bold mb-4">Your Swarm Stats 🏆</h2>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center">
-                        <span>Rank:</span>
-                        <span class="text-yellow-400 font-bold">#42</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span>SwarmCoins:</span>
-                        <span class="text-green-400 font-bold">1,337</span>
-                    </div>
-                    <div class="flex justify-between items-center">
-                        <span>Performance Score:</span>
-                        <span class="text-blue-400 font-bold">89.4</span>
-                    </div>
+<body class="bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white min-h-screen">
+    <div id="confetti-container" class="fixed inset-0 pointer-events-none"></div>
+    
+    <nav class="p-4 backdrop-blur-md bg-opacity-30 bg-black sticky top-0 z-50">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold">🌐 DACN</div>
+            <div class="flex items-center space-x-4">
+                <div class="animate-pulse bg-green-500 rounded-full px-4 py-2">
+                    <span id="online-count">1,337</span> online now
                 </div>
-            </div>
-
-            <div class="bg-gray-800 rounded-xl p-6 shadow-lg">
-                <h2 class="text-2xl font-bold mb-4">Global Leaderboard 🌍</h2>
-                <div class="space-y-4">
-                    <div class="flex justify-between items-center text-yellow-400">
-                        <span>1. SwarmMaster</span>
-                        <span>2,451 pts</span>
-                    </div>
-                    <div class="flex justify-between items-center text-gray-400">
-                        <span>2. CryptoSwarm</span>
-                        <span>2,312 pts</span>
-                    </div>
-                    <div class="flex justify-between items-center text-orange-400">
-                        <span>3. SwarmLord</span>
-                        <span>2,156 pts</span>
-                    </div>
+                <div class="bg-purple-600 rounded-xl px-4 py-2">
+                    <span id="user-points">0</span> ⭐ Points
                 </div>
             </div>
         </div>
+    </nav>
 
-        <div class="bg-gradient-to-r from-purple-600 to-pink-600 rounded-xl p-8 mb-12">
-            <h2 class="text-3xl font-bold mb-6">Daily Challenge 🎯</h2>
-            <div class="bg-gray-900 bg-opacity-50 rounded-lg p-6">
-                <h3 class="text-xl mb-4">Optimize 1000 nodes in under 60 seconds</h3>
-                <div class="flex items-center justify-between">
-                    <div class="flex items-center space-x-4">
-                        <span class="text-2xl">🏆</span>
-                        <span>Reward: 500 SwarmCoins</span>
+    <main class="container mx-auto p-4">
+        <div class="grid md:grid-cols-2 gap-8">
+            <!-- Achievement System -->
+            <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-md">
+                <h2 class="text-2xl font-bold mb-4">🏆 Your Achievements</h2>
+                <div class="grid grid-cols-3 gap-4" id="achievements">
+                    <div class="achievement-card cursor-pointer transform hover:scale-105 transition-all" onclick="unlockAchievement('first_contribution')">
+                        <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg p-4 text-center">
+                            <span class="text-4xl">🌟</span>
+                            <h3 class="mt-2">First Contribution</h3>
+                            <p class="text-sm opacity-75">+100 points</p>
+                        </div>
                     </div>
-                    <button class="bg-white text-purple-600 px-6 py-2 rounded-full font-bold hover:bg-gray-100 transition float">Start Challenge</button>
+                    <!-- More achievement cards here -->
+                </div>
+            </div>
+
+            <!-- Real-time Activity Feed -->
+            <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-md">
+                <h2 class="text-2xl font-bold mb-4">🔥 Live Activity</h2>
+                <div id="activity-feed" class="space-y-4 max-h-96 overflow-auto">
+                    <!-- Dynamic content -->
                 </div>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="bg-gray-800 rounded-xl p-6 text-center hover:transform hover:scale-105 transition cursor-pointer">
-                <span class="text-4xl mb-4 block">🎮</span>
-                <h3 class="text-xl font-bold mb-2">Practice Arena</h3>
-                <p class="text-gray-400">Train your swarm skills</p>
+        <!-- Daily Challenges -->
+        <div class="mt-8 bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-md">
+            <h2 class="text-2xl font-bold mb-4">🎯 Daily Challenges</h2>
+            <div class="grid md:grid-cols-3 gap-4" id="challenges">
+                <div class="challenge-card bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg p-4">
+                    <h3 class="font-bold">Speed Champion</h3>
+                    <p>Complete 5 tasks in under 1 hour</p>
+                    <div class="mt-2 bg-blue-900 rounded-full h-2">
+                        <div class="bg-blue-300 rounded-full h-2 w-1/3"></div>
+                    </div>
+                    <p class="text-sm mt-2">Reward: 500 points</p>
+                </div>
+                <!-- More challenge cards -->
             </div>
-            <div class="bg-gray-800 rounded-xl p-6 text-center hover:transform hover:scale-105 transition cursor-pointer">
-                <span class="text-4xl mb-4 block">🏰</span>
-                <h3 class="text-xl font-bold mb-2">Swarm Shop</h3>
-                <p class="text-gray-400">Upgrade your infrastructure</p>
-            </div>
-            <div class="bg-gray-800 rounded-xl p-6 text-center hover:transform hover:scale-105 transition cursor-pointer">
-                <span class="text-4xl mb-4 block">👥</span>
-                <h3 class="text-xl font-bold mb-2">Swarm Teams</h3>
-                <p class="text-gray-400">Compete together</p>
-            </div>
+        </div>
+    </main>
+
+    <!-- Floating Achievement Notification -->
+    <div id="achievement-popup" class="fixed bottom-4 right-4 transform translate-y-full opacity-0 transition-all duration-500">
+        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg p-4 shadow-lg">
+            <h3 class="font-bold">🎉 Achievement Unlocked!</h3>
+            <p id="achievement-text"></p>
         </div>
     </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
-        // Add interactive elements and real-time updates here
+        // Gamification System
+        let points = 0;
+        const achievementPopup = document.getElementById('achievement-popup');
+        const achievementText = document.getElementById('achievement-text');
+
+        function unlockAchievement(id) {
+            points += 100;
+            document.getElementById('user-points').textContent = points;
+            
+            // Show popup
+            achievementText.textContent = 'You earned the First Contribution badge! +100 points';
+            achievementPopup.classList.remove('translate-y-full', 'opacity-0');
+            
+            // Trigger confetti
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            setTimeout(() => {
+                achievementPopup.classList.add('translate-y-full', 'opacity-0');
+            }, 3000);
+        }
+
+        // Simulate real-time activity
         setInterval(() => {
-            // Update leaderboard
-            // Update swarm stats
-            // Check for achievements
+            const feed = document.getElementById('activity-feed');
+            const activities = [
+                '🚀 Alice just completed a challenge!',
+                '💫 Bob earned 500 points!',
+                '🌟 Carol reached level 10!'
+            ];
+            
+            const div = document.createElement('div');
+            div.className = 'bg-white bg-opacity-20 rounded p-3 animate__animated animate__fadeInRight';
+            div.textContent = activities[Math.floor(Math.random() * activities.length)];
+            
+            feed.insertBefore(div, feed.firstChild);
+            if (feed.children.length > 5) feed.removeChild(feed.lastChild);
+        }, 3000);
+
+        // Simulate online count variations
+        setInterval(() => {
+            const count = document.getElementById('online-count');
+            count.textContent = (1337 + Math.floor(Math.random() * 100)).toLocaleString();
         }, 5000);
     </script>
 </body>
