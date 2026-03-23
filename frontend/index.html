@@ -3,127 +3,131 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DACN - Collaborate & Earn</title>
+    <title>DACN - Join the Movement</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <style>
+        .achievement-unlock {
+            animation: pop 0.5s ease-out;
+        }
+        @keyframes pop {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+    </style>
 </head>
-<body class="bg-gradient-to-r from-purple-900 via-indigo-900 to-blue-900 text-white min-h-screen">
-    <div id="confetti-container" class="fixed inset-0 pointer-events-none"></div>
-    
-    <nav class="p-4 backdrop-blur-md bg-opacity-30 bg-black sticky top-0 z-50">
-        <div class="container mx-auto flex justify-between items-center">
-            <div class="text-2xl font-bold">🌐 DACN</div>
-            <div class="flex items-center space-x-4">
-                <div class="animate-pulse bg-green-500 rounded-full px-4 py-2">
-                    <span id="online-count">1,337</span> online now
-                </div>
-                <div class="bg-purple-600 rounded-xl px-4 py-2">
-                    <span id="user-points">0</span> ⭐ Points
-                </div>
-            </div>
-        </div>
-    </nav>
+<body class="bg-gray-900 text-white">
+    <div class="fixed top-0 right-0 m-4 text-xl">
+        <span id="userScore" class="font-bold">🌟 0</span>
+        <span id="userRank" class="ml-4 text-green-400">Novice</span>
+    </div>
 
-    <main class="container mx-auto p-4">
-        <div class="grid md:grid-cols-2 gap-8">
-            <!-- Achievement System -->
-            <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-md">
-                <h2 class="text-2xl font-bold mb-4">🏆 Your Achievements</h2>
-                <div class="grid grid-cols-3 gap-4" id="achievements">
-                    <div class="achievement-card cursor-pointer transform hover:scale-105 transition-all" onclick="unlockAchievement('first_contribution')">
-                        <div class="bg-gradient-to-br from-yellow-400 to-yellow-600 rounded-lg p-4 text-center">
-                            <span class="text-4xl">🌟</span>
-                            <h3 class="mt-2">First Contribution</h3>
-                            <p class="text-sm opacity-75">+100 points</p>
+    <div class="container mx-auto px-4 py-8">
+        <div class="text-center mb-12">
+            <h1 class="text-5xl font-bold mb-4 pulse">DACN</h1>
+            <p class="text-xl text-gray-400">Join <span id="activeUsers" class="text-green-400">2,547</span> pioneers shaping the future</p>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-8 mb-12">
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">🏆 Your Impact</h2>
+                <div class="space-y-4">
+                    <div class="flex justify-between items-center">
+                        <span>Network Influence</span>
+                        <div class="w-48 bg-gray-700 rounded-full h-4">
+                            <div id="influenceBar" class="bg-blue-500 rounded-full h-4" style="width: 25%"></div>
                         </div>
                     </div>
-                    <!-- More achievement cards here -->
-                </div>
-            </div>
-
-            <!-- Real-time Activity Feed -->
-            <div class="bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-md">
-                <h2 class="text-2xl font-bold mb-4">🔥 Live Activity</h2>
-                <div id="activity-feed" class="space-y-4 max-h-96 overflow-auto">
-                    <!-- Dynamic content -->
-                </div>
-            </div>
-        </div>
-
-        <!-- Daily Challenges -->
-        <div class="mt-8 bg-white bg-opacity-10 rounded-xl p-6 backdrop-blur-md">
-            <h2 class="text-2xl font-bold mb-4">🎯 Daily Challenges</h2>
-            <div class="grid md:grid-cols-3 gap-4" id="challenges">
-                <div class="challenge-card bg-gradient-to-br from-blue-500 to-blue-700 rounded-lg p-4">
-                    <h3 class="font-bold">Speed Champion</h3>
-                    <p>Complete 5 tasks in under 1 hour</p>
-                    <div class="mt-2 bg-blue-900 rounded-full h-2">
-                        <div class="bg-blue-300 rounded-full h-2 w-1/3"></div>
+                    <div id="achievements" class="grid grid-cols-3 gap-4">
+                        <!-- Dynamic achievements -->
                     </div>
-                    <p class="text-sm mt-2">Reward: 500 points</p>
                 </div>
-                <!-- More challenge cards -->
+            </div>
+
+            <div class="bg-gray-800 p-6 rounded-lg">
+                <h2 class="text-2xl font-bold mb-4">🔥 Activity Feed</h2>
+                <div id="feed" class="space-y-4 h-64 overflow-y-auto">
+                    <!-- Dynamic feed items -->
+                </div>
             </div>
         </div>
-    </main>
 
-    <!-- Floating Achievement Notification -->
-    <div id="achievement-popup" class="fixed bottom-4 right-4 transform translate-y-full opacity-0 transition-all duration-500">
-        <div class="bg-gradient-to-r from-yellow-400 to-yellow-600 rounded-lg p-4 shadow-lg">
-            <h3 class="font-bold">🎉 Achievement Unlocked!</h3>
-            <p id="achievement-text"></p>
+        <div class="text-center">
+            <button onclick="shareAchievement()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transform transition hover:scale-105">
+                Share Your Progress 🚀
+            </button>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+    <div id="achievementPopup" class="hidden fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-lg achievement-unlock">
+        🎉 New Achievement Unlocked!
+    </div>
+
     <script>
-        // Gamification System
-        let points = 0;
-        const achievementPopup = document.getElementById('achievement-popup');
-        const achievementText = document.getElementById('achievement-text');
-
-        function unlockAchievement(id) {
-            points += 100;
-            document.getElementById('user-points').textContent = points;
-            
-            // Show popup
-            achievementText.textContent = 'You earned the First Contribution badge! +100 points';
-            achievementPopup.classList.remove('translate-y-full', 'opacity-0');
-            
-            // Trigger confetti
-            confetti({
-                particleCount: 100,
-                spread: 70,
-                origin: { y: 0.6 }
-            });
-
-            setTimeout(() => {
-                achievementPopup.classList.add('translate-y-full', 'opacity-0');
-            }, 3000);
-        }
-
         // Simulate real-time activity
         setInterval(() => {
-            const feed = document.getElementById('activity-feed');
             const activities = [
-                '🚀 Alice just completed a challenge!',
-                '💫 Bob earned 500 points!',
-                '🌟 Carol reached level 10!'
+                '🌟 Alice just reached Level 5!',
+                '🤝 Bob connected with 3 new collaborators',
+                '🎯 Carol completed a major milestone',
+                '🚀 David launched a new initiative'
             ];
-            
+            const feed = document.getElementById('feed');
             const div = document.createElement('div');
-            div.className = 'bg-white bg-opacity-20 rounded p-3 animate__animated animate__fadeInRight';
+            div.className = 'p-3 bg-gray-700 rounded-lg';
             div.textContent = activities[Math.floor(Math.random() * activities.length)];
-            
-            feed.insertBefore(div, feed.firstChild);
-            if (feed.children.length > 5) feed.removeChild(feed.lastChild);
+            feed.prepend(div);
+            if (feed.children.length > 10) feed.lastChild.remove();
         }, 3000);
 
-        // Simulate online count variations
+        // Simulate user progress
+        let score = 0;
         setInterval(() => {
-            const count = document.getElementById('online-count');
-            count.textContent = (1337 + Math.floor(Math.random() * 100)).toLocaleString();
+            score += Math.floor(Math.random() * 10);
+            document.getElementById('userScore').textContent = `🌟 ${score}`;
+            document.getElementById('influenceBar').style.width = `${Math.min((score / 1000) * 100, 100)}%`;
+            if (score > 100 && !document.querySelector('[data-achievement="first-100"]')) {
+                unlockAchievement('First 100 Points! 🎉');
+            }
         }, 5000);
+
+        function unlockAchievement(title) {
+            const achievements = document.getElementById('achievements');
+            const achievement = document.createElement('div');
+            achievement.className = 'bg-gray-700 p-3 rounded-lg text-center text-sm';
+            achievement.setAttribute('data-achievement', 'first-100');
+            achievement.textContent = title;
+            achievements.appendChild(achievement);
+
+            const popup = document.getElementById('achievementPopup');
+            popup.classList.remove('hidden');
+            setTimeout(() => popup.classList.add('hidden'), 3000);
+        }
+
+        function shareAchievement() {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'My DACN Progress',
+                    text: `I've earned ${score} points on DACN! Join me in shaping the future of collaboration!`,
+                    url: window.location.href
+                });
+            }
+        }
+
+        // Simulate active users count
+        setInterval(() => {
+            const activeUsers = document.getElementById('activeUsers');
+            const current = parseInt(activeUsers.textContent);
+            activeUsers.textContent = current + Math.floor(Math.random() * 10);
+        }, 10000);
     </script>
 </body>
 </html>
