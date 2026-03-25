@@ -3,131 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DACN - Join the Movement</title>
+    <title>DACN - Earn While You Collaborate!</title>
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
-    <style>
-        .achievement-unlock {
-            animation: pop 0.5s ease-out;
-        }
-        @keyframes pop {
-            0% { transform: scale(0.8); opacity: 0; }
-            50% { transform: scale(1.2); }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .pulse {
-            animation: pulse 2s infinite;
-        }
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
-        }
-    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
 </head>
-<body class="bg-gray-900 text-white">
-    <div class="fixed top-0 right-0 m-4 text-xl">
-        <span id="userScore" class="font-bold">🌟 0</span>
-        <span id="userRank" class="ml-4 text-green-400">Novice</span>
-    </div>
+<body class="bg-gradient-to-br from-indigo-900 to-purple-700 min-h-screen text-white">
+    <div id="confetti-canvas" class="fixed top-0 left-0 w-full h-full pointer-events-none"></div>
+    
+    <nav class="p-4 flex justify-between items-center">
+        <div class="text-2xl font-bold">DACN</div>
+        <div class="flex items-center space-x-4">
+            <div class="animate-pulse">
+                <span id="online-count" class="font-bold text-green-400">1,287</span> online now
+            </div>
+            <div class="bg-purple-600 rounded-full px-4 py-2">
+                <span id="points" class="font-bold">🌟 2,450</span> points
+            </div>
+        </div>
+    </nav>
 
-    <div class="container mx-auto px-4 py-8">
+    <main class="container mx-auto px-4 py-8">
         <div class="text-center mb-12">
-            <h1 class="text-5xl font-bold mb-4 pulse">DACN</h1>
-            <p class="text-xl text-gray-400">Join <span id="activeUsers" class="text-green-400">2,547</span> pioneers shaping the future</p>
+            <h1 class="text-5xl font-bold mb-4 animate__animated animate__fadeIn">Collaborate & Earn</h1>
+            <p class="text-xl text-purple-200">Join thousands earning rewards while building the future</p>
         </div>
 
-        <div class="grid md:grid-cols-2 gap-8 mb-12">
-            <div class="bg-gray-800 p-6 rounded-lg">
-                <h2 class="text-2xl font-bold mb-4">🏆 Your Impact</h2>
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                <h3 class="text-2xl font-bold mb-4">🏆 Daily Challenge</h3>
+                <div class="mb-4 bg-purple-900/50 rounded-lg p-4">
+                    <div class="text-sm">Progress: 7/10 contributions</div>
+                    <div class="h-2 bg-purple-900 rounded-full mt-2">
+                        <div class="h-full bg-green-400 rounded-full" style="width: 70%"></div>
+                    </div>
+                </div>
+                <button class="bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-2 rounded-full w-full hover:opacity-90">Claim 500 Points</button>
+            </div>
+
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                <h3 class="text-2xl font-bold mb-4">👥 Team Rewards</h3>
                 <div class="space-y-4">
                     <div class="flex justify-between items-center">
-                        <span>Network Influence</span>
-                        <div class="w-48 bg-gray-700 rounded-full h-4">
-                            <div id="influenceBar" class="bg-blue-500 rounded-full h-4" style="width: 25%"></div>
-                        </div>
+                        <span>Team Size</span>
+                        <span class="font-bold">12 members</span>
                     </div>
-                    <div id="achievements" class="grid grid-cols-3 gap-4">
-                        <!-- Dynamic achievements -->
+                    <div class="flex justify-between items-center">
+                        <span>Team Points</span>
+                        <span class="font-bold text-green-400">24,680</span>
                     </div>
                 </div>
+                <button class="bg-gradient-to-r from-purple-500 to-indigo-500 px-6 py-2 rounded-full w-full mt-4 hover:opacity-90">Invite Friends</button>
             </div>
 
-            <div class="bg-gray-800 p-6 rounded-lg">
-                <h2 class="text-2xl font-bold mb-4">🔥 Activity Feed</h2>
-                <div id="feed" class="space-y-4 h-64 overflow-y-auto">
-                    <!-- Dynamic feed items -->
+            <div class="bg-white/10 p-6 rounded-xl backdrop-blur-lg hover:transform hover:scale-105 transition-all">
+                <h3 class="text-2xl font-bold mb-4">🎯 Achievements</h3>
+                <div class="space-y-2">
+                    <div class="flex items-center">
+                        <div class="w-8 h-8 rounded-full bg-yellow-400 flex items-center justify-center mr-2">🌟</div>
+                        <div>First Contribution</div>
+                    </div>
+                    <div class="flex items-center opacity-50">
+                        <div class="w-8 h-8 rounded-full bg-gray-600 flex items-center justify-center mr-2">🔒</div>
+                        <div>100 Contributions</div>
+                    </div>
                 </div>
             </div>
         </div>
 
-        <div class="text-center">
-            <button onclick="shareAchievement()" class="bg-green-500 hover:bg-green-600 text-white font-bold py-3 px-8 rounded-full transform transition hover:scale-105">
-                Share Your Progress 🚀
-            </button>
+        <div class="bg-white/10 p-8 rounded-xl backdrop-blur-lg mb-8">
+            <h2 class="text-3xl font-bold mb-6">🏆 Leaderboard</h2>
+            <div class="space-y-4">
+                <div class="flex justify-between items-center p-4 bg-purple-900/30 rounded-lg">
+                    <div class="flex items-center">
+                        <span class="text-2xl mr-4">👑</span>
+                        <span>CryptoKing</span>
+                    </div>
+                    <span class="font-bold">12,450 points</span>
+                </div>
+                <!-- More leaderboard entries -->
+            </div>
         </div>
+    </main>
+
+    <div id="achievement-popup" class="fixed bottom-4 right-4 bg-green-500 p-4 rounded-lg shadow-lg hidden animate__animated animate__fadeInUp">
+        <div class="font-bold">🎉 Achievement Unlocked!</div>
+        <div>First Contribution Complete</div>
     </div>
 
-    <div id="achievementPopup" class="hidden fixed bottom-4 right-4 bg-green-500 text-white p-4 rounded-lg achievement-unlock">
-        🎉 New Achievement Unlocked!
-    </div>
-
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
     <script>
-        // Simulate real-time activity
+        // Simulated online count update
         setInterval(() => {
-            const activities = [
-                '🌟 Alice just reached Level 5!',
-                '🤝 Bob connected with 3 new collaborators',
-                '🎯 Carol completed a major milestone',
-                '🚀 David launched a new initiative'
-            ];
-            const feed = document.getElementById('feed');
-            const div = document.createElement('div');
-            div.className = 'p-3 bg-gray-700 rounded-lg';
-            div.textContent = activities[Math.floor(Math.random() * activities.length)];
-            feed.prepend(div);
-            if (feed.children.length > 10) feed.lastChild.remove();
-        }, 3000);
-
-        // Simulate user progress
-        let score = 0;
-        setInterval(() => {
-            score += Math.floor(Math.random() * 10);
-            document.getElementById('userScore').textContent = `🌟 ${score}`;
-            document.getElementById('influenceBar').style.width = `${Math.min((score / 1000) * 100, 100)}%`;
-            if (score > 100 && !document.querySelector('[data-achievement="first-100"]')) {
-                unlockAchievement('First 100 Points! 🎉');
-            }
+            const count = document.getElementById('online-count');
+            count.textContent = Math.floor(Math.random() * 200) + 1200;
         }, 5000);
 
-        function unlockAchievement(title) {
-            const achievements = document.getElementById('achievements');
-            const achievement = document.createElement('div');
-            achievement.className = 'bg-gray-700 p-3 rounded-lg text-center text-sm';
-            achievement.setAttribute('data-achievement', 'first-100');
-            achievement.textContent = title;
-            achievements.appendChild(achievement);
-
-            const popup = document.getElementById('achievementPopup');
+        // Show achievement popup randomly
+        setTimeout(() => {
+            const popup = document.getElementById('achievement-popup');
             popup.classList.remove('hidden');
-            setTimeout(() => popup.classList.add('hidden'), 3000);
-        }
-
-        function shareAchievement() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'My DACN Progress',
-                    text: `I've earned ${score} points on DACN! Join me in shaping the future of collaboration!`,
-                    url: window.location.href
-                });
-            }
-        }
-
-        // Simulate active users count
-        setInterval(() => {
-            const activeUsers = document.getElementById('activeUsers');
-            const current = parseInt(activeUsers.textContent);
-            activeUsers.textContent = current + Math.floor(Math.random() * 10);
-        }, 10000);
+            confetti({
+                particleCount: 100,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            setTimeout(() => popup.classList.add('hidden'), 4000);
+        }, 3000);
     </script>
 </body>
 </html>
